@@ -1,4 +1,4 @@
-# React Global State
+# Global React State
 
 This package provides simple global state management through React hooks.
 
