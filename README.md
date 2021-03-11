@@ -9,6 +9,7 @@ This package provides simple global state management through React hooks.
 # Usage
 
 ## Create the super state
+
 ```ts
 import createSuperState from 'react-super-state';
 
@@ -16,6 +17,7 @@ const [useMyState, setMyState] = createSuperState(initialValue);
 ```
 
 ## Use the super state
+
 ```ts
 const MyComponent = () => {
 	const [myState, setMyState] = useMyState();
@@ -35,7 +37,7 @@ setMyState(newValue);
 
 ## Export and import
 
-You can easily export the hook or the setter from one file and import them into another:
+You can easily export the hook or the setter from one file and import it into another:
 
 ```ts
 // myState.ts
@@ -62,7 +64,7 @@ const MyComponent = () => {
 };
 ```
 
-This will unnecessarily attempt to re-render the component which uses the hook whenever the state updates. Instead, you could simply import the setter without the hook:
+This will unnecessarily attempt to re-render the component whenever the state updates, since it is using the hook. Instead, you could simply import the setter without the hook:
 
 ```ts
 // ✅ Do this.
@@ -73,4 +75,5 @@ const MyComponent = () => {
 	// Call `setMyState` in here.
 };
 ```
+
 No hook required!
