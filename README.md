@@ -11,7 +11,7 @@ This package provides simple global state management through React hooks.
 ## Create the global state
 
 ```ts
-import createGlobalState from 'react-global-state';
+import createGlobalState from 'global-react-state';
 
 const [useMyState, setMyState] = createGlobalState(initialValue);
 ```
