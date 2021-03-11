@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Creates a super state. Returns the state's hook function and setter function.
+ * Creates a global state. Returns the state's hook function and setter function.
  * 
  * Usage:
  * ```
- * const [useMyState, setMyState] = createSuperState(initialValue);
+ * const [useMyState, setMyState] = createGlobalState(initialValue);
  * ```
  * 
  * Hook usage:
@@ -18,8 +18,8 @@ import { useState, useEffect } from 'react';
  * setMyState(newValue);
  * ```
  */
-const createSuperState = <StateType>(
-	/** The initial value of the super state. */
+const createGlobalState = <StateType>(
+	/** The initial value of the global state. */
 	initialState: StateType
 ) => {
 	let currentState = initialState;
@@ -27,11 +27,11 @@ const createSuperState = <StateType>(
 	const updateStates: Array<() => void> = [];
 
 	/**
-	 * The setter function of the super state. Takes a new value for the super state as an argument.
+	 * The setter function of the global state. Takes a new value for the global state as an argument.
 	 *
 	 * This can be called inside or outside a React component. Its identity remains the same between renders.
 	 */
-	const setSuperState = (newState: StateType) => {
+	const setGlobalState = (newState: StateType) => {
 		currentState = newState;
 		for (let i = 0; i < updateStates.length; i++) {
 			updateStates[i]();
@@ -39,11 +39,11 @@ const createSuperState = <StateType>(
 	};
 
 	/**
-	 * The React hook for the super state.
+	 * The React hook for the global state.
 	 * 
-	 * Returns `[superState, setSuperState]`, just like a [state hook](https://reactjs.org/docs/hooks-state.html).
+	 * Returns `[globalState, setGlobalState]`, just like a [state hook](https://reactjs.org/docs/hooks-state.html).
 	 */
-	const useSuperState = () => {
+	const useGlobalState = () => {
 		const [state, setState] = useState(currentState);
 
 		useEffect(() => {
@@ -61,10 +61,10 @@ const createSuperState = <StateType>(
 			};
 		}, []);
 
-		return [state, setSuperState];
+		return [state, setGlobalState];
 	};
 
-	return [useSuperState, setSuperState] as const;
+	return [useGlobalState, setGlobalState] as const;
 };
 
-export default createSuperState;
+export default createGlobalState;

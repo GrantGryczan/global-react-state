@@ -1,10 +1,10 @@
 {
-	"name": "react-super-state",
+	"name": "react-global-state",
 	"version": "1.0.0",
 	"description": "A simple, lightweight global state hook for React.",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/GrantGryczan/react-super-state.git"
+		"url": "git+https://github.com/GrantGryczan/react-global-state.git"
 	},
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",

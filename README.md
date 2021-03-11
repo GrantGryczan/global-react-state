@@ -1,4 +1,4 @@
-# React Super State
+# React Global State
 
 This package provides simple global state management through React hooks.
 
@@ -8,15 +8,15 @@ This package provides simple global state management through React hooks.
 
 # Usage
 
-## Create the super state
+## Create the global state
 
 ```ts
-import createSuperState from 'react-super-state';
+import createGlobalState from 'react-global-state';
 
-const [useMyState, setMyState] = createSuperState(initialValue);
+const [useMyState, setMyState] = createGlobalState(initialValue);
 ```
 
-## Use the super state
+## Use the global state
 
 ```ts
 const MyComponent = () => {
@@ -26,7 +26,7 @@ const MyComponent = () => {
 };
 ```
 
-## Set the super state
+## Set the global state
 
 The setter function can be called **inside or outside** a React component.
 ```ts
@@ -41,7 +41,7 @@ You can easily export the hook or the setter from one file and import it into an
 
 ```ts
 // myState.ts
-export const [useMyState, setMyState] = createSuperState(initialValue);
+export const [useMyState, setMyState] = createGlobalState(initialValue);
 ```
 
 ```ts
