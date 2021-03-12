@@ -1,10 +1,10 @@
 {
 	"name": "global-react-state",
-	"version": "1.0.6",
+	"version": "1.0.8",
 	"description": "A simple, lightweight global state hook for React.",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/GrantGryczan/react-global-state.git"
+		"url": "git+https://github.com/GrantGryczan/global-react-state.git"
 	},
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -13,7 +13,7 @@
 		"dist/*"
 	],
 	"scripts": {
-		"publish": "tsc && npm publish"
+		"prepublishOnly": "tsc"
 	},
 	"author": "Grant Gryczan",
 	"license": "MIT",
