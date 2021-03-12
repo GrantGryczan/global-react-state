@@ -61,7 +61,7 @@ const createGlobalState = <StateType>(
 			};
 		}, []);
 
-		return [state, setGlobalState];
+		return [state, setGlobalState] as const;
 	};
 
 	return [useGlobalState, setGlobalState] as const;

@@ -77,3 +77,11 @@ const MyComponent = () => {
 ```
 
 No hook required!
+
+# TypeScript Usage
+
+If TypeScript cannot infer your state's type sufficiently, you can explitly define the type using a type parameter on `createGlobalState`. For example:
+
+```ts
+export const [useNumbers, setNumbers] = createGlobalState<number[]>([]);
+```
