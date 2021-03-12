@@ -1,6 +1,6 @@
 {
 	"name": "global-react-state",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "A simple, lightweight global state hook for React.",
 	"repository": {
 		"type": "git",
@@ -24,6 +24,8 @@
 		"manage",
 		"management",
 		"useGlobalState",
+		"useState",
+		"context",
 		"simple",
 		"lightweight",
 		"predictable",
