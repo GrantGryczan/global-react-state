@@ -13,7 +13,7 @@ This package provides simple global state management through React hooks.
 ```ts
 import createGlobalState from 'global-react-state';
 
-const [useMyState, setMyState] = createGlobalState(initialValue);
+const [useMyState, setMyState, getMyState] = createGlobalState(initialValue);
 ```
 
 ## Use the global state
@@ -29,9 +29,20 @@ const MyComponent = () => {
 ## Set the global state
 
 The setter function can be called **inside or outside** a React component.
+
 ```ts
 setMyState(newValue);
 ```
+
+## Get the global state
+
+The getter function should only be called **outside** a React component.
+
+```ts
+console.log(getMyState());
+```
+
+If you want to get the state **inside** a React component, you should use [`useMyState`](#use-the-global-state) instead.
 
 # Best Practice
 
@@ -83,5 +94,5 @@ No hook required!
 If TypeScript cannot infer your state's type sufficiently, you can explitly define the type using a type parameter on `createGlobalState`. For example:
 
 ```ts
-const [useNumbers, setNumbers] = createGlobalState<number[]>([]);
+const [useNumbers] = createGlobalState<number[]>([]);
 ```

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Creates a global state. Returns the state's hook function and setter function.
+ * Creates a [global React state](https://github.com/GrantGryczan/global-react-state#global-react-state). Returns the state's hook function, setter function, and getter function.
  * 
  * Usage:
  * ```
- * const [useMyState, setMyState] = createGlobalState(initialValue);
+ * const [useMyState, setMyState, getMyState] = createGlobalState(initialValue);
  * ```
  * 
  * Hook usage:
@@ -17,15 +17,20 @@ import { useState, useEffect } from 'react';
  * ```
  * setMyState(newValue);
  * ```
+ * 
+ * Getter usage:
+ * ```
+ * console.log(getMyState());
+ * ```
  */
 const createGlobalState = <StateType>(
 	/** The initial value of the global state. */
 	initialState: StateType
 ) => {
 	let currentState = initialState;
-
+	
 	const updateStates: Array<() => void> = [];
-
+	
 	/**
 	 * The setter function of the global state. Takes a new value for the global state as an argument.
 	 *
@@ -37,7 +42,7 @@ const createGlobalState = <StateType>(
 			updateStates[i]();
 		}
 	};
-
+	
 	/**
 	 * The React hook for the global state.
 	 * 
@@ -45,14 +50,14 @@ const createGlobalState = <StateType>(
 	 */
 	const useGlobalState = () => {
 		const [state, setState] = useState(currentState);
-
+		
 		useEffect(() => {
 			const updateState = () => {
 				setState(currentState);
 			};
 			
 			updateState._index = updateStates.push(updateState) - 1;
-
+			
 			return () => {
 				// Delete `updateState` from `updateStates` in O(1) by swapping the last item into its place and popping the last item.
 				const lastUpdateState = updateStates.pop() as typeof updateState;
@@ -60,11 +65,18 @@ const createGlobalState = <StateType>(
 				lastUpdateState._index = updateState._index;
 			};
 		}, []);
-
+		
 		return [state, setGlobalState] as const;
 	};
-
-	return [useGlobalState, setGlobalState] as const;
+	
+	/**
+	 * The getter function of the global state. Returns the current value of the state.
+	 *
+	 * This should only be called outside a React component.
+	 */
+	const getGlobalState = () => currentState;
+	
+	return [useGlobalState, setGlobalState, getGlobalState] as const;
 };
 
 export default createGlobalState;
