@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Creates a [global React state](https://github.com/GrantGryczan/global-react-state#global-react-state). Returns the state's hook function, setter function, and getter function.
+ * Creates a [global React state](https://github.com/GrantGryczan/global-react-state#global-react-state).
  * 
  * Usage:
  * ```
