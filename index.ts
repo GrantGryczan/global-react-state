@@ -59,10 +59,12 @@ const createGlobalState = <StateType>(
 			updateState._index = updateStates.push(updateState) - 1;
 			
 			return () => {
-				// Delete `updateState` from `updateStates` in O(1) by swapping the last item into its place and popping the last item.
+				// Delete `updateState` from `updateStates` in O(1) by popping the last item and swapping it into this item's place (unless this item is the popped item).
 				const lastUpdateState = updateStates.pop() as typeof updateState;
-				updateStates[updateState._index] = lastUpdateState;
-				lastUpdateState._index = updateState._index;
+				if (lastUpdateState !== updateState) {
+					updateStates[updateState._index] = lastUpdateState;
+					lastUpdateState._index = updateState._index;
+				}
 			};
 		}, []);
 		
