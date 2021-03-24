@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
 
+export type GlobalStateSetter<State> = (newState: State) => void;
+export type GlobalStateHook<State> = () => readonly [State, GlobalStateSetter<State>];
+export type GlobalStateGetter<State> = () => State;
+export type GlobalState<State> = readonly [GlobalStateHook<State>, GlobalStateSetter<State>, GlobalStateGetter<State>];
+
 /**
  * Creates a [global React state](https://github.com/GrantGryczan/global-react-state#global-react-state).
  * 
@@ -23,10 +28,10 @@ import { useState, useEffect } from 'react';
  * console.log(getMyState());
  * ```
  */
-const createGlobalState = <StateType>(
+const createGlobalState = <State>(
 	/** The initial value of the global state. */
-	initialState: StateType
-) => {
+	initialState: State
+): GlobalState<State> => {
 	let currentState = initialState;
 	
 	const updateStates: Array<() => void> = [];
@@ -36,7 +41,7 @@ const createGlobalState = <StateType>(
 	 *
 	 * This can be called inside or outside a React component. Its identity remains the same between renders.
 	 */
-	const setGlobalState = (newState: StateType) => {
+	const setGlobalState: GlobalStateSetter<State> = newState => {
 		currentState = newState;
 		for (let i = 0; i < updateStates.length; i++) {
 			updateStates[i]();
@@ -48,7 +53,7 @@ const createGlobalState = <StateType>(
 	 * 
 	 * Returns `[globalState, setGlobalState]`, just like a [state hook](https://reactjs.org/docs/hooks-state.html).
 	 */
-	const useGlobalState = () => {
+	const useGlobalState: GlobalStateHook<State> = () => {
 		const [state, setState] = useState(currentState);
 		
 		useEffect(() => {
@@ -76,7 +81,7 @@ const createGlobalState = <StateType>(
 	 *
 	 * This should only be called outside a React component.
 	 */
-	const getGlobalState = () => currentState;
+	const getGlobalState: GlobalStateGetter<State> = () => currentState;
 	
 	return [useGlobalState, setGlobalState, getGlobalState] as const;
 };
