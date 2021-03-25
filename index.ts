@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export type GlobalStateSetter<State> = (newState: State) => void;
+export type GlobalStateSetter<State> = (state: React.SetStateAction<State>) => void;
 export type GlobalStateHook<State> = () => readonly [State, GlobalStateSetter<State>];
 export type GlobalStateGetter<State> = () => State;
 export type GlobalState<State> = readonly [GlobalStateHook<State>, GlobalStateSetter<State>, GlobalStateGetter<State>];
@@ -30,9 +30,11 @@ export type GlobalState<State> = readonly [GlobalStateHook<State>, GlobalStateSe
  */
 const createGlobalState = <State>(
 	/** The initial value of the global state. */
-	initialState: State
+	initialState: State | (() => State)
 ): GlobalState<State> => {
-	let currentState = initialState;
+	let currentState = typeof initialState === 'function'
+		? (initialState as () => State)()
+		: initialState;
 	
 	const updateStates: Array<() => void> = [];
 	
@@ -41,8 +43,10 @@ const createGlobalState = <State>(
 	 *
 	 * This can be called inside or outside a React component. Its identity remains the same between renders.
 	 */
-	const setGlobalState: GlobalStateSetter<State> = newState => {
-		currentState = newState;
+	const setGlobalState: GlobalStateSetter<State> = state => {
+		currentState = typeof state === 'function'
+			? (state as (state: State) => State)(currentState)
+			: state;
 		for (let i = 0; i < updateStates.length; i++) {
 			updateStates[i]();
 		}
