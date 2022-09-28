@@ -21,7 +21,7 @@ const [useMyState, setMyState, getMyState] = createGlobalState(initialValue);
 ```ts
 const MyComponent = () => {
 	const [myState, setMyState] = useMyState();
-	
+
 	// ...
 };
 ```
@@ -78,7 +78,7 @@ import { useMyState } from './myState';
 
 const MyComponent = () => {
 	const [, setMyState] = useMyState();
-	
+
 	// Call `setMyState` in here.
 };
 ```
